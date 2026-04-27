@@ -6,40 +6,57 @@
 <title>CAPS Central — EMS</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
 <style>
-/* CSS remains largely the same, added tab styles for Inactive Vol */
-:root { --bg: #f4f6fa; --white: #ffffff; --border: #e2e8f0; --primary: #1e40af; --text: #0f172a; --radius: 8px; }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
-#loading-screen{position:fixed;inset:0;background:var(--white);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:10px;}
-.spinner{width:30px;height:30px;border:3px solid #eee;border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
-.login-container{background:white;padding:40px;border-radius:12px;width:350px;box-shadow:0 4px 10px rgba(0,0,0,0.05);border:1px solid var(--border);}
-.form-group{margin-bottom:15px;}
-.form-group label{display:block;font-size:11px;font-weight:700;margin-bottom:5px;text-transform:uppercase;}
-.form-control{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;outline:none;}
-.btn{padding:10px 20px;border-radius:6px;border:none;cursor:pointer;font-weight:600;font-size:13px;transition:0.2s;}
-.btn-primary{background:var(--primary);color:white;width:100%;}
-#app-shell{display:none;}
-.layout{display:flex;}
-.sidebar{width:220px;background:white;height:100vh;position:fixed;border-right:1px solid var(--border);padding:20px;}
-.main-content{margin-left:220px;padding:30px;width:100%;}
-.nav-item{display:block;width:100%;text-align:left;padding:10px;margin-bottom:5px;background:none;border:none;border-radius:6px;cursor:pointer;font-weight:500;color:#666;}
-.nav-item.active{background:#eff6ff;color:var(--primary);}
-.page{display:none;} .page.active{display:block;}
-.section-card{background:white;border-radius:8px;border:1px solid var(--border);margin-top:20px;overflow:hidden;}
-table{width:100%;border-collapse:collapse;}
-th{background:#f8fafc;text-align:left;padding:12px;font-size:11px;text-transform:uppercase;}
-td{padding:12px;border-top:1px solid var(--border);}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:1000;}
-.modal-overlay.open{display:flex;}
-.modal{background:white;padding:25px;border-radius:10px;width:450px;}
-.tabs{display:flex;border-bottom:1px solid var(--border);margin-top:20px;}
-.tab{padding:10px 20px;cursor:pointer;font-weight:600;color:#94a3b8;border-bottom:2px solid transparent;}
-.tab.active{color:var(--primary);border-bottom-color:var(--primary);}
-.badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
-.badge-warn{background:#fffbeb;color:#d97706;}
-.badge-danger{background:#fef2f2;color:#dc2626;}
+    :root { --bg: #f4f6fa; --white: #ffffff; --border: #e2e8f0; --primary: #1e40af; --text: #0f172a; --radius: 8px; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans', sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+    
+    /* LOADING */
+    #loading-screen { position:fixed; inset:0; background:var(--white); display:flex; align-items:center; justify-content:center; z-index:9999; flex-direction:column; gap:10px; }
+    .spinner { width:30px; height:30px; border:3px solid #eee; border-top-color:var(--primary); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* LOGIN */
+    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+    .login-container { background:white; padding:40px; border-radius:12px; width:350px; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid var(--border); }
+    .form-group { margin-bottom:15px; }
+    .form-group label { display:block; font-size:11px; font-weight:700; margin-bottom:5px; text-transform:uppercase; }
+    .form-control { width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; outline:none; font-family: inherit; }
+    
+    /* LAYOUT */
+    #app-shell { display:none; }
+    .layout { display:flex; }
+    .sidebar { width:220px; background:white; height:100vh; position:fixed; border-right:1px solid var(--border); padding:20px; display:flex; flex-direction:column; }
+    .main-content { margin-left:220px; padding:30px; width:100%; min-height:100vh; }
+    
+    /* NAV */
+    .nav-item { display:block; width:100%; text-align:left; padding:12px; margin-bottom:5px; background:none; border:none; border-radius:6px; cursor:pointer; font-weight:500; color:#666; transition: 0.2s; }
+    .nav-item:hover { background: #f8fafc; }
+    .nav-item.active { background:#eff6ff; color:var(--primary); font-weight:700; }
+    
+    /* COMPONENTS */
+    .btn { padding:10px 20px; border-radius:6px; border:none; cursor:pointer; font-weight:600; font-size:13px; transition:0.2s; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-primary { background:var(--primary); color:white; }
+    .btn-outline { background: white; border: 1px solid var(--border); color: var(--text); }
+    .page { display:none; } .page.active { display:block; }
+    .section-card { background:white; border-radius:8px; border:1px solid var(--border); margin-top:20px; overflow:hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    table { width:100%; border-collapse:collapse; }
+    th { background:#f8fafc; text-align:left; padding:12px; font-size:11px; text-transform:uppercase; color: #64748b; }
+    td { padding:12px; border-top:1px solid var(--border); }
+    
+    /* TABS */
+    .tabs { display:flex; border-bottom:1px solid var(--border); margin-top:20px; }
+    .tab { padding:10px 20px; cursor:pointer; font-weight:600; color:#94a3b8; border-bottom:2px solid transparent; }
+    .tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+    
+    /* BADGES */
+    .badge { padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; }
+    .badge-warn { background:#fffbeb; color:#d97706; }
+    .badge-danger { background:#fef2f2; color:#dc2626; }
+
+    /* MODAL */
+    .modal-overlay { position:fixed; inset:0; background:rgba(15, 23, 42, 0.5); display:none; align-items:center; justify-content:center; z-index:1000; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:white; padding:25px; border-radius:10px; width:450px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
 </style>
 </head>
 <body>
@@ -48,91 +65,147 @@ td{padding:12px;border-top:1px solid var(--border);}
 
 <div id="login-screen">
   <div class="login-container">
-    <h2 style="margin-bottom:20px">CAPS Login</h2>
-    <div class="form-group"><label>Email</label><input type="email" id="login-email" class="form-control"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="login-password" class="form-control"></div>
-    <div class="form-group" id="vol-name-group" style="display:none;"><label>Your Name</label><input type="text" id="login-vol-name" class="form-control"></div>
-    <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
+    <h2 style="margin-bottom:20px">CAPS Central EMS</h2>
+    <div class="form-group"><label>Email Address</label><input type="email" id="login-email" class="form-control" placeholder="admin@caps.edu"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="login-password" class="form-control" placeholder="••••••••"></div>
+    <button class="btn btn-primary" style="width:100%" onclick="doLogin(event)">Sign In</button>
+    <p style="font-size:11px; color:#64748b; text-align:center; margin-top:15px;">Use 'admin' in email for Admin Access</p>
   </div>
 </div>
 
 <div id="app-shell">
   <div class="layout">
     <aside class="sidebar">
-      <h3>CAPS EMS</h3>
-      <nav id="sidebar-nav" style="margin-top:30px"></nav>
-      <button class="btn" style="margin-top:20px;color:red" onclick="doLogout()">Sign Out</button>
+      <h2 style="font-size:18px; color:var(--primary); margin-bottom:5px;">CAPS EMS</h2>
+      <p id="user-display-role" style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:700; margin-bottom:20px;"></p>
+      <nav id="sidebar-nav" style="flex:1"></nav>
+      <button class="btn btn-outline" style="color:#dc2626; border-color:#fecaca" onclick="doLogout()">Sign Out</button>
     </aside>
+    
     <main class="main-content">
       <div id="page-admin-volunteers" class="page">
-        <h1>Volunteers</h1>
+        <h1>Volunteer Directory</h1>
+        <p style="color:#64748b">Manage and monitor all wing volunteers.</p>
         <div class="tabs">
-          <div class="tab active" onclick="switchVolTab('all')">All Volunteers</div>
-          <div class="tab" onclick="switchVolTab('inactive')">Inactive (No Roles)</div>
+          <div class="tab active" onclick="switchVolTab(event, 'all')">All Volunteers</div>
+          <div class="tab" onclick="switchVolTab(event, 'inactive')">Inactive (No Roles)</div>
         </div>
-        <div class="section-card"><table><thead><tr><th>Name</th><th>Email</th><th>Wing</th><th>Roles</th></tr></thead><tbody id="admin-vol-tbody"></tbody></table></div>
+        <div class="section-card">
+            <table><thead><tr><th>Name</th><th>Email</th><th>Wing</th><th>Assignment Status</th></tr></thead><tbody id="admin-vol-tbody"></tbody></table>
+        </div>
       </div>
+
       <div id="page-lead-events" class="page">
         <h1>My Wing Events</h1>
-        <button class="btn btn-primary" style="width:auto;margin-top:10px" onclick="openModal('modal-create-event')">Create New Event</button>
-        <div class="section-card"><table><thead><tr><th>Event Name</th><th>Venue</th><th>Date</th><th>Status</th></tr></thead><tbody id="lead-events-tbody"></tbody></table></div>
+        <button class="btn btn-primary" style="margin-top:15px" onclick="openModal('modal-create-event')">Create New Event</button>
+        <div class="section-card">
+            <table><thead><tr><th>Event Name</th><th>Venue</th><th>Date</th><th>Status</th></tr></thead><tbody id="lead-events-tbody"></tbody></table>
+        </div>
       </div>
-      </main>
+    </main>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-create-event">
   <div class="modal">
     <h3>Create New Event</h3>
-    <div class="form-group"><label>Name</label><input type="text" id="ev-name" class="form-control"></div>
+    <div class="form-group" style="margin-top:15px"><label>Event Name</label><input type="text" id="ev-name" class="form-control"></div>
     <div class="form-group"><label>Venue</label><input type="text" id="ev-venue" class="form-control"></div>
-    <div class="form-group"><label>Start Date</label><input type="date" id="ev-start" class="form-control"></div>
-    <div class="form-group"><label>End Date</label><input type="date" id="ev-end" class="form-control"></div>
-    <div class="form-group"><label>Description</label><textarea id="ev-desc" class="form-control"></textarea></div>
-    <button class="btn btn-primary" id="btn-create-event" onclick="createEvent()">Save Event</button>
-    <button class="btn" onclick="closeModal('modal-create-event')">Cancel</button>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="form-group"><label>Start Date</label><input type="date" id="ev-start" class="form-control"></div>
+        <div class="form-group"><label>End Date</label><input type="date" id="ev-end" class="form-control"></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="ev-desc" class="form-control" rows="3"></textarea></div>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+        <button class="btn btn-primary" style="flex:1" id="btn-create-event" onclick="createEvent(event)">Save Event</button>
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-create-event')">Cancel</button>
+    </div>
   </div>
 </div>
 
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyT3JaaNByYRc-tqfRVdocO5Of1eaf4E-YvIsP1p_nWMtFaIMytgQCM_f9h3fufQTM15g/exec';
-let DB = { events:[], volunteers:[], roles:[], leads:[] };
+let DB = { events:[], volunteers:[], roles:[] };
 let currentUser = null;
 
-// Prevent form submission refresh on buttons
-document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', e => e.preventDefault()));
-
 async function api(params) {
-  const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
-  const res = await fetch(url);
-  const json = await res.json();
-  return json.success ? json.data : null;
+  try {
+    const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
+    const res = await fetch(url);
+    const json = await res.json();
+    return json.success ? json.data : null;
+  } catch (e) {
+    console.error("API Error:", e);
+    return null;
+  }
 }
 
 async function refreshData() {
-  const [e, v, r] = await Promise.all([api({action:'getEvents'}), api({action:'getVolunteers'}), api({action:'getRoles'})]);
-  DB.events = e || []; DB.volunteers = v || []; DB.roles = r || [];
+  const [e, v, r] = await Promise.all([
+    api({action:'getEvents'}), 
+    api({action:'getVolunteers'}), 
+    api({action:'getRoles'})
+  ]);
+  DB.events = e || []; 
+  DB.volunteers = v || []; 
+  DB.roles = r || [];
 }
 
-function doLogin() {
+function doLogin(e) {
+  if(e) e.preventDefault();
   const email = document.getElementById('login-email').value;
-  // Simple auth logic for demonstration
-  currentUser = { email, role: email.includes('admin') ? 'admin' : 'lead', wing: 'GPT' }; 
+  if(!email) return alert("Please enter an email");
+
+  currentUser = { 
+    email, 
+    role: email.toLowerCase().includes('admin') ? 'admin' : 'lead', 
+    wing: 'GPT' 
+  }; 
+
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app-shell').style.display = 'block';
+  document.getElementById('user-display-role').innerText = currentUser.role + " Account";
+  
   setupSidebar();
   navigateTo(currentUser.role === 'admin' ? 'admin-volunteers' : 'lead-events');
 }
 
+function setupSidebar() {
+  const nav = document.getElementById('sidebar-nav');
+  nav.innerHTML = '';
+  
+  const menu = currentUser.role === 'admin' 
+    ? [{id:'admin-volunteers', label:'Volunteers'}] 
+    : [{id:'lead-events', label:'Wing Events'}];
+
+  menu.forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-item';
+    btn.id = 'nav-' + item.id;
+    btn.textContent = item.label;
+    btn.onclick = () => navigateTo(item.id);
+    nav.appendChild(btn);
+  });
+}
+
 function navigateTo(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  
+  const targetPage = document.getElementById('page-' + id);
+  const targetNav = document.getElementById('nav-' + id);
+  
+  if(targetPage) targetPage.classList.add('active');
+  if(targetNav) targetNav.classList.add('active');
+
   if(id === 'admin-volunteers') loadAdminVolunteers();
   if(id === 'lead-events') loadLeadEvents();
 }
 
-async function createEvent() {
+async function createEvent(e) {
+  e.preventDefault();
   const btn = document.getElementById('btn-create-event');
+  const originalText = btn.innerText;
   btn.innerText = "Saving..."; btn.disabled = true;
   
   const data = {
@@ -145,34 +218,60 @@ async function createEvent() {
     wing: currentUser.wing
   };
 
-  await api(data);
-  closeModal('modal-create-event');
-  await refreshData();
-  loadLeadEvents();
-  btn.innerText = "Save Event"; btn.disabled = false;
+  const res = await api(data);
+  if(res) {
+    closeModal('modal-create-event');
+    await refreshData();
+    loadLeadEvents();
+  } else {
+    alert("Failed to save event. Check console.");
+  }
+  btn.innerText = originalText; btn.disabled = false;
 }
 
 function loadAdminVolunteers(filterType = 'all') {
   const tbody = document.getElementById('admin-vol-tbody');
-  tbody.innerHTML = '';
-  DB.volunteers.forEach(v => {
-    const roles = DB.roles.filter(r => r.volunteerId == v.id).length;
-    if (filterType === 'inactive' && roles > 0) return;
-    
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Loading...</td></tr>';
+  
+  const rows = DB.volunteers.filter(v => {
+    const rolesCount = DB.roles.filter(r => String(r.volunteerId) === String(v.id)).length;
+    return filterType === 'inactive' ? rolesCount === 0 : true;
+  });
+
+  tbody.innerHTML = rows.length > 0 ? '' : '<tr><td colspan="4" style="text-align:center">No volunteers found.</td></tr>';
+
+  rows.forEach(v => {
+    const rolesCount = DB.roles.filter(r => String(r.volunteerId) === String(v.id)).length;
     tbody.innerHTML += `<tr>
-      <td>${v.name}</td><td>${v.email}</td><td>${v.wing}</td>
-      <td><span class="badge ${roles === 0 ? 'badge-danger' : 'badge-warn'}">${roles} Roles</span></td>
+      <td style="font-weight:600">${v.name}</td>
+      <td>${v.email}</td>
+      <td><span class="badge" style="background:#f1f5f9">${v.wing}</span></td>
+      <td><span class="badge ${rolesCount === 0 ? 'badge-danger' : 'badge-warn'}">${rolesCount} Roles Assigned</span></td>
     </tr>`;
   });
 }
 
-function switchVolTab(type) {
+function loadLeadEvents() {
+    const tbody = document.getElementById('lead-events-tbody');
+    const myEvents = DB.events.filter(e => e.wing === currentUser.wing);
+    tbody.innerHTML = myEvents.length > 0 ? '' : '<tr><td colspan="4" style="text-align:center">No events created.</td></tr>';
+    
+    myEvents.forEach(e => {
+        tbody.innerHTML += `<tr>
+            <td style="font-weight:600">${e.name}</td>
+            <td>${e.venue}</td>
+            <td>${e.startDate}</td>
+            <td><span class="badge badge-warn">${e.status}</span></td>
+        </tr>`;
+    });
+}
+
+function switchVolTab(e, type) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+  e.target.classList.add('active');
   loadAdminVolunteers(type);
 }
 
-// Sidebar setup, logout, and modal functions omitted for brevity but remain functional as per previous version
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function doLogout() { location.reload(); }
